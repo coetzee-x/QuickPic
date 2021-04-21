@@ -14,6 +14,11 @@ namespace DataAccess.EFCore.Repositories
             _applicationContext = applicationContext;
         }
 
+        public Question Get(int id)
+        {
+            return _applicationContext.Questions.FirstOrDefault(x => x.Id == id);
+        }
+
         public IEnumerable<Question> GetAll()
         {
             return _applicationContext.Questions.ToList();
