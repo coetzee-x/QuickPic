@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <div>
                         <label>Username:</label>
-                        @Html.TextBoxFor(x => x.Username.Length, new { @class = "form-control" })
+                        @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.Username, string.Empty, new { @class = "text-danger"})
                     </div>
                     <div>
