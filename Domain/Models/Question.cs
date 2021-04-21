@@ -6,7 +6,7 @@ namespace Domain.Models
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        public int RespondentResultId { get; set; }
         public ICollection<RespondentResult> RespondentResults { get; set; }
+        public ICollection<Objective> Questions { get; set; }
     }
 }

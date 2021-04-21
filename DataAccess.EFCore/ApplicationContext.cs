@@ -33,10 +33,25 @@ namespace DataAccess.EFCore
                 new Question { Id = 9, Text = "Integration" },
                 new Question { Id = 10, Text = "Testing" }
                 );
+
+            modelBuilder.Entity<Objective>().HasData(
+                new Objective { Id = 1, QuestionId = 1, Expectation = 8 },
+                new Objective { Id = 2, QuestionId = 2, Expectation = 8 },
+                new Objective { Id = 3, QuestionId = 3, Expectation = 5 },
+                new Objective { Id = 4, QuestionId = 4, Expectation = 5 },
+                new Objective { Id = 5, QuestionId = 5, Expectation = 2 },
+                new Objective { Id = 6, QuestionId = 6, Expectation = 5 },
+                new Objective { Id = 7, QuestionId = 7, Expectation = 30 },
+                new Objective { Id = 8, QuestionId = 8, Expectation = 22 },
+                new Objective { Id = 9, QuestionId = 9, Expectation = 5 },
+                new Objective { Id = 10, QuestionId = 10, Expectation = 10 }
+           );
+
         }
 
         public DbSet<Respondent> Respondents { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<RespondentResult> RespondentResults { get; set; }
+        public DbSet<Objective> Objectives { get; set; }
     }
 }
