@@ -5,16 +5,16 @@ using System.Linq;
 
 namespace DataAccess.EFCore.Repositories
 {
-    public class QuestionReptory : IQuestionRepository
+    public class QuestionRepository : IQuestionRepository
     {
         private readonly ApplicationContext _applicationContext;
 
-        public QuestionReptory(ApplicationContext applicationContext)
+        public QuestionRepository(ApplicationContext applicationContext)
         {
             _applicationContext = applicationContext;
         }
 
-        public Question Get(int id)
+        public Question GetById(int id)
         {
             return _applicationContext.Questions.FirstOrDefault(x => x.Id == id);
         }

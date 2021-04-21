@@ -1,8 +1,8 @@
 ﻿using Domain.Interfaces;
+using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using QuickPic.Web.Models;
 using System;
-using System.Collections.Generic;
 
 namespace QuickPic.Web.Controllers
 {
@@ -10,9 +10,15 @@ namespace QuickPic.Web.Controllers
     {
         private readonly IQuestionRepository _questionRepository;
 
-        public SurveyController(IQuestionRepository questionRepository)
+        private readonly IRespondentResultRepository _respondentResultRepository;
+
+        private readonly IRespondentRepository _respondentRepository;
+
+        public SurveyController(IQuestionRepository questionRepository, IRespondentResultRepository respondentResultRepository, IRespondentRepository respondentRepository)
         {
             _questionRepository = questionRepository;
+            _respondentResultRepository = respondentResultRepository;
+            _respondentRepository = respondentRepository;
         }
 
         [HttpGet]
@@ -41,12 +47,31 @@ namespace QuickPic.Web.Controllers
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
 
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                
+                foreach (var item in model.Questions) 
+                {
+                    var question = _questionRepository.GetById(item.QuestionId);
+                    var respondent = _respondentRepository.GetById(1);
+
+                    _respondentResultRepository.Add(new RespondentResult
+                    {
+                        Question = question,
+                        Respondent = respondent,
+                        Answer = item.Answer
+                    });
+
+                    return RedirectToAction("Confirmation", "Survey");
+                }
             }
 
             return View("Index", model);
+        }
+
+        [HttpGet]
+        public ActionResult Confirmation() 
+        {
+            return View();
         }
     }
 }

@@ -29,9 +29,9 @@ namespace QuickPic.Web
         {
             services.AddControllersWithViews();
 
-            services.AddScoped(typeof(IAuthenticationRepository), typeof(AuthenticationRepository));
-            services.AddScoped(typeof(IQuestionRepository), typeof(QuestionReptory));
-
+            services.AddScoped(typeof(IRespondentRepository), typeof(RespondentRepository));
+            services.AddScoped(typeof(IQuestionRepository), typeof(QuestionRepository));
+            services.AddScoped(typeof(IRespondentResultRepository), typeof(RespondentResultRepository));
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
 

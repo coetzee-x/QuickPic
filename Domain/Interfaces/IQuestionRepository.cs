@@ -5,7 +5,7 @@ namespace Domain.Interfaces
 {
     public interface IQuestionRepository
     {
-        Question Get(int id);
+        Question GetById(int id);
         IEnumerable<Question> GetAll();
     }
 }

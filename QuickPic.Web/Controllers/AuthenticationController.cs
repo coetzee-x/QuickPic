@@ -10,8 +10,8 @@ namespace QuickPic.Web.Controllers
         private const string ADMIN_USERNAME = "Administrator";
         private const string ADMIN_PASSWORD = "Password123";
 
-        private readonly IAuthenticationRepository _authenticationRepository;
-        public AuthenticationController(IAuthenticationRepository authenticationRepository)
+        private readonly IRespondentRepository _authenticationRepository;
+        public AuthenticationController(IRespondentRepository authenticationRepository)
         {
             _authenticationRepository = authenticationRepository;
         }
@@ -34,7 +34,7 @@ namespace QuickPic.Web.Controllers
                     && model.Password == ADMIN_PASSWORD)
                     return RedirectToAction("Index", "Results");
 
-                var respondent = _authenticationRepository.Get(model.Username, model.Password);
+                var respondent = _authenticationRepository.GetByUsernameAndPassword(model.Username, model.Password);
 
                 if (respondent == null)
                     return View();

@@ -1,9 +1,10 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
+using System.Linq;
 
 namespace DataAccess.EFCore.Repositories
 {
-    public class RespondentRepository : IRespondentResultRepository
+    public class RespondentRepository : IRespondentRepository
     {
         private readonly ApplicationContext _applicationContext;
 
@@ -12,11 +13,14 @@ namespace DataAccess.EFCore.Repositories
             _applicationContext = applicationContext;
         }
 
-        public void Add(RespondentResult model)
+        public Respondent GetById(int id)
         {
-            _applicationContext.RespondentResults.Add(model);
+            return _applicationContext.Respondents.FirstOrDefault(x => x.Id == id);
+        }
 
-            _applicationContext.SaveChanges();
+        public Respondent GetByUsernameAndPassword(string username, string password)
+        {
+            return _applicationContext.Respondents.FirstOrDefault(x => x.Username == username && x.Password == password);
         }
     }
 }
