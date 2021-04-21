@@ -1,0 +1,29 @@
+﻿@model List<QuickPic.Web.Models.ResultViewModel>
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Question</td>
+                    <td>Respondents Weight</td>
+                    <td>Expectation Gap</td>
+                    <td>Accuracy</td>
+                    <td>Manager's Weight</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model) 
+                {
+                    <tr>
+                        <td>@result.Question</td>
+                        <td>@result.RespondentWeight</td>
+                        <td>@result.ExpectationGap</td>
+                        <td>@result.Accuracy</td>
+                        <td>@result.ManagersWeight</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

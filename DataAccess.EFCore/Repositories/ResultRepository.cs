@@ -26,6 +26,7 @@ namespace DataAccess.EFCore.Repositories
             {
                 Result result = new Result
                 {
+                    Question = question.Text,
                     RespondentsWeight = (from x in results where x.Question.Id == question.Id select x.Answer).Sum() / results.Where(x => x.Question.Id == question.Id).Count(),
                     ManagersWeight = _applicationContext.Objectives.FirstOrDefault(x => x.Question.Id == question.Id).Expectation,
                 };

@@ -2,6 +2,7 @@
 {
     public class ResultViewModel
     {
+        public string Question { get; set; }
         public int RespondentWeight { get; set; }
         public int ExpectationGap { get; set; }
         public int Accuracy { get; set; }

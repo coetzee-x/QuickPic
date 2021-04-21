@@ -1,5 +1,7 @@
 ﻿using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using QuickPic.Web.Models;
+using System.Collections.Generic;
 
 namespace QuickPic.Web.Controllers
 {
@@ -15,9 +17,23 @@ namespace QuickPic.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            _resultRepository.Get();
+            var results = _resultRepository.Get();
 
-            return View();
+            List<ResultViewModel> model = new List<ResultViewModel>();
+
+            foreach (var result in results) 
+            {
+                model.Add(new ResultViewModel
+                {
+                    Question = result.Question,
+                    RespondentWeight = result.RespondentsWeight,
+                    ExpectationGap = result.ExpectationGap,
+                    Accuracy = result.Accuracy,
+                    ManagersWeight = result.ManagersWeight
+                });
+            }
+
+            return View(model);
         }
     }
 }
