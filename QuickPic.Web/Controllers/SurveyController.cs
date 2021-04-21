@@ -13,6 +13,8 @@ namespace QuickPic.Web.Controllers
         {
             _questionRepository = questionRepository;
         }
+
+        [HttpGet]
         public ActionResult Index()
         {
             var questions = _questionRepository.GetAll();
@@ -30,6 +32,12 @@ namespace QuickPic.Web.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Submit() 
+        {
+            return View();
         }
     }
 }
