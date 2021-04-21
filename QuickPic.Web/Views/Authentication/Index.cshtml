@@ -10,12 +10,12 @@
                     <div>
                         <label>Username:</label>
                         @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Username, string.Empty, new { @class = "text-danger"})
+                        <div><small>@Html.ValidationMessageFor(x => x.Username, string.Empty, new { @class = "text-danger" })</small></div>
                     </div>
                     <div>
                         <label>Password:</label>
                         @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Password, string.Empty, new { @class="text-danger"})
+                        <div><small>@Html.ValidationMessageFor(x => x.Password, string.Empty, new { @class = "text-danger" })</small></div>
                     </div>
                 </div>
                 <div class="card-footer text-right">

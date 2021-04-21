@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using QuickPic.Web.Models;
+using System;
 using System.Collections.Generic;
 
 namespace QuickPic.Web.Controllers
@@ -19,11 +20,11 @@ namespace QuickPic.Web.Controllers
         {
             var questions = _questionRepository.GetAll();
 
-            List<SurveyViewModel> model = new List<SurveyViewModel>();
+            SurveyViewModel model = new SurveyViewModel();
 
             foreach (var question in questions)
             {
-                model.Add(new SurveyViewModel
+                model.Questions.Add(new QuestionViewModel
                 {
                     QuestionId = question.Id,
                     QuestionText = question.Text,
@@ -35,9 +36,17 @@ namespace QuickPic.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Submit() 
+        public ActionResult Submit(SurveyViewModel model)
         {
-            return View();
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
+
+            if (ModelState.IsValid) 
+            {
+                
+            }
+
+            return View("Index", model);
         }
     }
 }

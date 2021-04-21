@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace QuickPic.Web.Models
 {
     public class SurveyViewModel
     {
-        public int QuestionId { get; set; }
+        public SurveyViewModel()
+        {
+            Questions = new List<QuestionViewModel>();
 
-        public string QuestionText { get; set; }
+        }
 
-        public int Answer { get; set; }
+        public List<QuestionViewModel> Questions { get; set; }
     }
 }

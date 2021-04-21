@@ -30,6 +30,7 @@ namespace QuickPic.Web
             services.AddControllersWithViews();
 
             services.AddScoped(typeof(IAuthenticationRepository), typeof(AuthenticationRepository));
+            services.AddScoped(typeof(IQuestionRepository), typeof(QuestionReptory));
 
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
