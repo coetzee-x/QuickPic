@@ -10,8 +10,8 @@ namespace DataAccess.EFCore
         {
 
         }
-
         public DbSet<Respondent> Respondents { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<RespondentResult> RespondentResults { get; set; }
     }
 }
