@@ -8,5 +8,6 @@ namespace Domain.Interfaces
     public interface IRespondentResultRepository
     {
         void Add(RespondentResult model);
+        IEnumerable<RespondentResult> GetAll();
     }
 }

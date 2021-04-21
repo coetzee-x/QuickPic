@@ -1,5 +1,7 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAccess.EFCore.Repositories
 {
@@ -17,6 +19,11 @@ namespace DataAccess.EFCore.Repositories
             _applicationContext.RespondentResults.Add(model);
 
             _applicationContext.SaveChanges();
+        }
+
+        public IEnumerable<RespondentResult> GetAll()
+        {
+            return _applicationContext.RespondentResults.ToList();
         }
     }
 }
