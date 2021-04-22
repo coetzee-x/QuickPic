@@ -23,6 +23,7 @@ namespace QuickPic.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult LogIn(AuthenticationViewModel model)
         {
             if (model == null)
@@ -32,7 +33,7 @@ namespace QuickPic.Web.Controllers
             {
                 if (model.Username == ADMIN_USERNAME
                     && model.Password == ADMIN_PASSWORD)
-                    return RedirectToAction("Index", "Results");
+                    return RedirectToAction("Index", "Result");
 
                 var respondent = _authenticationRepository.GetByUsernameAndPassword(model.Username, model.Password);
 

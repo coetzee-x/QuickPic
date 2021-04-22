@@ -46,6 +46,7 @@ namespace QuickPic.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Submit(SurveyViewModel model)
         {
             if (model == null)
