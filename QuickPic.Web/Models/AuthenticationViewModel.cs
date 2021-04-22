@@ -4,10 +4,10 @@ namespace QuickPic.Web.Models
 {
     public class AuthenticationViewModel
     {
-        [Required(ErrorMessage = "Please enter a Username.")]
+        [Required(ErrorMessage = "Please enter your username.")]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "Please enter a Password.")]
+        [Required(ErrorMessage = "Please enter your password.")]
         public string Password { get; set; }
     }
 }

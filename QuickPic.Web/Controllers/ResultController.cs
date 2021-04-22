@@ -21,14 +21,14 @@ namespace QuickPic.Web.Controllers
 
             List<ResultViewModel> model = new List<ResultViewModel>();
 
-            foreach (var result in results) 
+            foreach (var result in results)
             {
                 model.Add(new ResultViewModel
                 {
                     Question = result.Question,
                     RespondentWeight = result.RespondentsWeight,
                     ExpectationGap = result.ExpectationGap,
-                    Accuracy = result.Accuracy,
+                    Accuracy = $"{result.Accuracy} %",
                     ManagersWeight = result.ManagersWeight
                 });
             }

@@ -1,5 +1,9 @@
 ﻿@model QuickPic.Web.Models.AuthenticationViewModel
 
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <div class="row pt-3">
     <div class="col-md-3"></div>
     <div class="col-md-6">
@@ -7,15 +11,15 @@
         {
             <div class="card">
                 <div class="card-body">
-                    <div>
+                    <div class="form-group">
                         <label>Username:</label>
                         @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
-                        <div><small>@Html.ValidationMessageFor(x => x.Username, string.Empty, new { @class = "text-danger" })</small></div>
+                        <div class="text-danger">@Html.ValidationMessageFor(x => x.Username, string.Empty)</div>
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label>Password:</label>
-                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
-                        <div><small>@Html.ValidationMessageFor(x => x.Password, string.Empty, new { @class = "text-danger" })</small></div>
+                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @type = "password" })
+                        <div class="text-danger">@Html.ValidationMessageFor(x => x.Password, string.Empty)</div>
                     </div>
                 </div>
                 <div class="card-footer text-right">

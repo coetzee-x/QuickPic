@@ -3,6 +3,7 @@ using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using QuickPic.Web.Models;
 using System;
+using System.Linq;
 
 namespace QuickPic.Web.Controllers
 {
@@ -32,11 +33,14 @@ namespace QuickPic.Web.Controllers
             {
                 model.Questions.Add(new QuestionViewModel
                 {
+                    Random = Guid.NewGuid(),
                     QuestionId = question.Id,
                     QuestionText = question.Text,
                     Answer = 0
                 });
             }
+
+            model.Questions = model.Questions.OrderBy(x => x.Random).ToList();
 
             return View(model);
         }
@@ -46,6 +50,14 @@ namespace QuickPic.Web.Controllers
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
+
+            var total = (from x in model.Questions select x.Answer).Sum();
+
+            if (total > 100 || total < 100)
+            {
+                ModelState.AddModelError("TotalModelError", $"The total entered values cannot be less than or exceed 100. Your current total is {total}.");
+                return View("Index", model);
+            }
 
             if (ModelState.IsValid)
             {
@@ -60,9 +72,9 @@ namespace QuickPic.Web.Controllers
                         Respondent = respondent,
                         Answer = item.Answer
                     });
-
-                    return RedirectToAction("Confirmation", "Survey");
                 }
+
+                return RedirectToAction("Confirmation", "Survey");
             }
 
             return View("Index", model);

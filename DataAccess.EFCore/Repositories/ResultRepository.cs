@@ -9,32 +9,47 @@ namespace DataAccess.EFCore.Repositories
     {
         private readonly ApplicationContext _applicationContext;
 
-        public ResultRepository(ApplicationContext applicationContext)
+        private readonly IQuestionRepository _questionRepository;
+
+        public ResultRepository(ApplicationContext applicationContext, IQuestionRepository questionRepository)
         {
             _applicationContext = applicationContext;
+            _questionRepository = questionRepository;
         }
 
         public IEnumerable<Result> Get()
         {
             List<Result> model = new List<Result>();
 
-            var questions = _applicationContext.Questions.ToList();
+            var questions = _questionRepository.GetAll();
 
             var results = _applicationContext.RespondentResults.ToList();
 
-            foreach (var question in questions) 
+            if (results.Count > 0) 
             {
-                Result result = new Result
+                foreach (var question in questions)
                 {
-                    Question = question.Text,
-                    RespondentsWeight = (from x in results where x.Question.Id == question.Id select x.Answer).Sum() / results.Where(x => x.Question.Id == question.Id).Count(),
-                    ManagersWeight = _applicationContext.Objectives.FirstOrDefault(x => x.Question.Id == question.Id).Expectation,
-                };
+                    var sum = (from x in results where x.Question.Id == question.Id select x.Answer).Sum();
+                    var total = (from x in results where x.Question.Id == question.Id select x).Count();
+                    var average = sum / total;
 
-                result.ExpectationGap = result.ManagersWeight = result.RespondentsWeight;
-                result.Accuracy = 10;
+                    Result result = new Result
+                    {
+                        Question = question.Text,
+                        RespondentsWeight = average,
+                        ManagersWeight = _applicationContext.Objectives.FirstOrDefault(x => x.Question.Id == question.Id).Expectation,
+                    };
 
-                model.Add(result);
+                    var gap = result.ManagersWeight - result.RespondentsWeight;
+
+                    result.ExpectationGap = gap;
+
+                    var accuracy = ((result.ManagersWeight - result.RespondentsWeight) / result.RespondentsWeight) * 100;
+
+                    result.Accuracy = accuracy;
+
+                    model.Add(result);
+                }
             }
 
             return model;

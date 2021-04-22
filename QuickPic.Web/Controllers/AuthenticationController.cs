@@ -37,7 +37,7 @@ namespace QuickPic.Web.Controllers
                 var respondent = _authenticationRepository.GetByUsernameAndPassword(model.Username, model.Password);
 
                 if (respondent == null)
-                    return View();
+                    return View("Index");
 
                 return RedirectToAction("Index", "Survey");
             }
