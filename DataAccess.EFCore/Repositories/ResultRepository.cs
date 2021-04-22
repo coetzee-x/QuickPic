@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,10 +12,13 @@ namespace DataAccess.EFCore.Repositories
 
         private readonly IQuestionRepository _questionRepository;
 
-        public ResultRepository(ApplicationContext applicationContext, IQuestionRepository questionRepository)
+        private readonly IObjectiveRepository _objectiveRepository;
+
+        public ResultRepository(ApplicationContext applicationContext, IQuestionRepository questionRepository, IObjectiveRepository objectiveRepository)
         {
             _applicationContext = applicationContext;
             _questionRepository = questionRepository;
+            _objectiveRepository = objectiveRepository;
         }
 
         public IEnumerable<Result> Get()
@@ -25,28 +29,28 @@ namespace DataAccess.EFCore.Repositories
 
             var results = _applicationContext.RespondentResults.ToList();
 
-            if (results.Count > 0) 
+            if (results.Count > 0)
             {
                 foreach (var question in questions)
                 {
-                    var sum = (from x in results where x.Question.Id == question.Id select x.Answer).Sum();
-                    var total = (from x in results where x.Question.Id == question.Id select x).Count();
-                    var average = sum / total;
+                    var mWeight = _objectiveRepository.GetByQuestionId(question.Id).Expectation;
+
+                    var rSum = (from x in results where x.Question.Id == question.Id select x.Answer).Sum();
+                    var rTotal = (from x in results where x.Question.Id == question.Id select x).Count();
+                    var rWeight = rSum / rTotal;
 
                     Result result = new Result
                     {
                         Question = question.Text,
-                        RespondentsWeight = average,
-                        ManagersWeight = _applicationContext.Objectives.FirstOrDefault(x => x.Question.Id == question.Id).Expectation,
+                        RespondentsWeight = rWeight,
+                        ManagersWeight = mWeight,
+                        ExpectationGap = mWeight - rWeight
                     };
 
-                    var gap = result.ManagersWeight - result.RespondentsWeight;
-
-                    result.ExpectationGap = gap;
-
-                    var accuracy = ((result.ManagersWeight - result.RespondentsWeight) / result.RespondentsWeight) * 100;
-
-                    result.Accuracy = accuracy;
+                    if (mWeight > rWeight)
+                        result.Accuracy = 100 - Math.Abs((Math.Round(((result.RespondentsWeight - result.ManagersWeight) / result.ManagersWeight) * 100, 2)));
+                    else
+                        result.Accuracy = Math.Round(((result.ManagersWeight - result.RespondentsWeight) / result.RespondentsWeight) * 100, 2);
 
                     model.Add(result);
                 }

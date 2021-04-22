@@ -64,6 +64,7 @@ namespace QuickPic.Web.Controllers
                 foreach (var item in model.Questions) 
                 {
                     var question = _questionRepository.GetById(item.QuestionId);
+
                     var respondent = _respondentRepository.GetById(1);
 
                     _respondentResultRepository.Add(new RespondentResult

@@ -28,7 +28,7 @@ namespace QuickPic.Web.Controllers
                     Question = result.Question,
                     RespondentWeight = result.RespondentsWeight,
                     ExpectationGap = result.ExpectationGap,
-                    Accuracy = $"{result.Accuracy} %",
+                    Accuracy = result.Accuracy == 0 ? $"100 %" : $"{result.Accuracy} %",
                     ManagersWeight = result.ManagersWeight
                 });
             }
