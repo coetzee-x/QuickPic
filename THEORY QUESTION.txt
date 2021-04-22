@@ -1,0 +1,7 @@
+The solution makes use of the repository pattern.
+
+I decided to use the repository pattern because of the following advantages:
+1. One model, one repository - the seperation of concern make it very manageable and easy to implement new functionality.
+2. Dependency Injection work great with the repository pattern (the use of interfaces).
+3. Loosely coupled approach - the data access logic is handled in the repository whilee business logic happens in the controllers.
+4. Switching to a new data source is made easy.
